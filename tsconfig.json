@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "strict": true,
+    "importHelpers": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "sourceMap": true,
+    "outDir": "./dist",
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "moduleResolution": "node",
+  },
+  "include": [
+    "src/**/*.ts",
+  ],
+  "exclude": [
+    "dist",
+    "node_modules"
+  ]
+}
