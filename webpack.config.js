@@ -7,6 +7,7 @@ module.exports = {
     entry: {
         '3d-viewer/app': path.join(__dirname, 'src', '3d-viewer', 'app.ts'),
         'csv-viewer/app': path.join(__dirname, 'src', 'csv-viewer', 'app.ts'),
+        'chart-viewer/app': path.join(__dirname, 'src', 'chart-viewer', 'app.ts'),
     },
     output: {
         path: path.join(__dirname, 'dist'),
@@ -41,6 +42,13 @@ module.exports = {
             templateContent: '<span class="message">Загрузка файла...</span><table class="main-table"></table>',
             chunks: ['csv-viewer/app'],
             filename: 'csv-viewer/index.html',
+        }),
+        new HtmlWebpackPlugin({
+            scriptLoading: 'defer',
+            title: 'Просмотр графиков',
+            templateContent: '<div id="chart"></div>',
+            chunks: ['chart-viewer/app'],
+            filename: 'chart-viewer/index.html',
         }),
         new MiniCssExtractPlugin(),
     ],
