@@ -15,27 +15,67 @@ const date_to = moment();
 const date_from = date_to.clone().subtract(1, 'day');
 
 async function main () {
-    const devices: { [dev_id: string]: { title: string, vars: string[]; } } = {
-        dtv1: {
-            title: 'ДТВ1',
-            vars: ['temp'],
-        },
-        dtv2: {
-            title: 'ДТВ2',
-            vars: ['temp'],
-        },
-        dtv3: {
-            title: 'ДТВ3',
-            vars: ['temp'],
-        },
+    const settings = await Api.loadSettings() as {
+        devices: string[];
     };
-    const device_ids = ['dtv1', 'dtv2', 'dtv3'];
+
+    // const devices: { [dev_id: string]: { title: string, vars: string[]; } } = {
+    //     dtv1: {
+    //         title: 'ДТВ1',
+    //         vars: ['temp'],
+    //     },
+    //     dtv2: {
+    //         title: 'ДТВ2',
+    //         vars: ['temp'],
+    //     },
+    //     dtv3: {
+    //         title: 'ДТВ3',
+    //         vars: ['temp'],
+    //     },
+    //     dtv4: {
+    //         title: 'ДТВ4',
+    //         vars: ['temp'],
+    //     },
+    //     dtv5: {
+    //         title: 'ДТВ5',
+    //         vars: ['temp'],
+    //     },
+    //     dtv6: {
+    //         title: 'ДТВ6',
+    //         vars: ['temp'],
+    //     },
+    //     dtv7: {
+    //         title: 'ДТВ7',
+    //         vars: ['temp'],
+    //     },
+    //     dtv8: {
+    //         title: 'ДТВ8',
+    //         vars: ['temp'],
+    //     },
+    //     dtv9: {
+    //         title: 'ДТВ9',
+    //         vars: ['temp'],
+    //     },
+    //     dtv10: {
+    //         title: 'ДТВ10',
+    //         vars: ['temp'],
+    //     },
+    //     dtv11: {
+    //         title: 'ДТВ11',
+    //         vars: ['temp'],
+    //     },
+    //     dtv12: {
+    //         title: 'ДТВ12',
+    //         vars: ['temp'],
+    //     },
+    // };
+    const device_ids = settings.devices;
 
     const results = await Promise.all(
-        Object.entries(devices).map(([device_id, device_data]) =>
+        device_ids.map((device_id) =>
             Api.getDeviceArchiveData(
                 device_id,
-                device_data.vars,
+                ['temp'],
                 date_from.format('YYYY-MM-DD HH:mm:ss'),
                 date_to.format('YYYY-MM-DD HH:mm:ss'),
                 {
@@ -59,7 +99,7 @@ async function main () {
                     width: 3,
                     shape: 'spline',
                 },
-                name: `${devices[device_id].title}, Температура`,
+                name: `${device_id}, Температура`,
             };
             traces.push(trace);
         }
