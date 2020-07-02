@@ -19,61 +19,12 @@ async function main () {
         devices: string[];
     };
 
-    // const devices: { [dev_id: string]: { title: string, vars: string[]; } } = {
-    //     dtv1: {
-    //         title: 'ДТВ1',
-    //         vars: ['temp'],
-    //     },
-    //     dtv2: {
-    //         title: 'ДТВ2',
-    //         vars: ['temp'],
-    //     },
-    //     dtv3: {
-    //         title: 'ДТВ3',
-    //         vars: ['temp'],
-    //     },
-    //     dtv4: {
-    //         title: 'ДТВ4',
-    //         vars: ['temp'],
-    //     },
-    //     dtv5: {
-    //         title: 'ДТВ5',
-    //         vars: ['temp'],
-    //     },
-    //     dtv6: {
-    //         title: 'ДТВ6',
-    //         vars: ['temp'],
-    //     },
-    //     dtv7: {
-    //         title: 'ДТВ7',
-    //         vars: ['temp'],
-    //     },
-    //     dtv8: {
-    //         title: 'ДТВ8',
-    //         vars: ['temp'],
-    //     },
-    //     dtv9: {
-    //         title: 'ДТВ9',
-    //         vars: ['temp'],
-    //     },
-    //     dtv10: {
-    //         title: 'ДТВ10',
-    //         vars: ['temp'],
-    //     },
-    //     dtv11: {
-    //         title: 'ДТВ11',
-    //         vars: ['temp'],
-    //     },
-    //     dtv12: {
-    //         title: 'ДТВ12',
-    //         vars: ['temp'],
-    //     },
-    // };
     const device_ids = settings.devices;
+    const device_definitions = await Api.loadDevicesDefinitions(device_ids);
 
     const results = await Promise.all(
-        device_ids.map((device_id) =>
-            Api.getDeviceArchiveData(
+        device_ids.map(device_id =>
+            Api.loadDeviceArchiveData(
                 device_id,
                 ['temp'],
                 date_from.format('YYYY-MM-DD HH:mm:ss'),
@@ -91,6 +42,7 @@ async function main () {
         for (const var_id in result) {
             const var_data = result[var_id];
             const device_id = device_ids[ind];
+            const device_title = device_id in device_definitions ? device_definitions[device_id].title : device_id;
             const trace: Partial<Plotly.PlotData> = {
                 x: var_data.x,
                 y: var_data.y,
@@ -99,7 +51,7 @@ async function main () {
                     width: 3,
                     shape: 'spline',
                 },
-                name: `${device_id}, Температура`,
+                name: `${device_title}, Температура`,
             };
             traces.push(trace);
         }

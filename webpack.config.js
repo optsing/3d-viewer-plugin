@@ -2,6 +2,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const MomentLocalesPlugin = require('moment-locales-webpack-plugin');
 
 module.exports = {
     entry: {
@@ -51,6 +52,9 @@ module.exports = {
             filename: 'chart-viewer/index.html',
         }),
         new MiniCssExtractPlugin(),
+        new MomentLocalesPlugin({
+            localesToKeep: ['ru'],
+        }),
     ],
     devServer: {
         contentBase: path.join(__dirname, 'dist'),

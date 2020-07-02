@@ -23,6 +23,7 @@
     "html-webpack-plugin": "^4.3.0",
     "mini-css-extract-plugin": "^0.9.0",
     "moment": "^2.27.0",
+    "moment-locales-webpack-plugin": "^1.2.0",
     "plotly.js": "^1.54.5",
     "qs": "^6.9.4",
     "scada-plugin-api": "git+https://github.com/optsing/scada-plugin-api.git",
