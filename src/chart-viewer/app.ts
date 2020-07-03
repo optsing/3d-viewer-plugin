@@ -12,7 +12,7 @@ Plotly.register(ru_locale);
 
 
 async function main () {
-    const { devices } = qs.parse(location.search, { ignoreQueryPrefix: true }) as { [key: string]: string };
+    const { devices, period = '1440', step = '120' } = qs.parse(location.search, { ignoreQueryPrefix: true }) as { [key: string]: string };
 
     const device_ids: string[] = devices.split(',');
     await Api.updateUrl({
@@ -21,7 +21,9 @@ async function main () {
     const device_definitions = await Api.loadDevicesDefinitions(device_ids);
 
     const date_to = moment();
-    const date_from = date_to.clone().subtract(1, 'day');
+    const date_from = date_to.clone().subtract(Number.parseInt(period), 'minutes');
+
+    const step_number = Number.parseInt(step);
 
     const results = await Promise.all(
         device_ids.map(device_id =>
@@ -31,7 +33,7 @@ async function main () {
                 date_from.format('YYYY-MM-DD HH:mm:ss'),
                 date_to.format('YYYY-MM-DD HH:mm:ss'),
                 {
-                    period: 120,
+                    step: step_number,
                 },
             )
         ),
