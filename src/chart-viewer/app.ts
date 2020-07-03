@@ -1,26 +1,27 @@
 import './app.css';
 
 import moment from 'moment';
+import qs from 'qs';
+
+import Plotly from 'plotly.js/lib/core';
+import ru_locale from 'plotly.js/lib/locales/ru';
 
 import * as Api from 'scada-plugin-api';
 
-import Plotly from 'plotly.js/lib/core';
-import Plotly_ru from 'plotly.js/lib/locales/ru';
+Plotly.register(ru_locale);
 
-Plotly.register([
-    Plotly_ru,
-]);
-
-const date_to = moment();
-const date_from = date_to.clone().subtract(1, 'day');
 
 async function main () {
-    const settings = await Api.loadSettings() as {
-        devices: string[];
-    };
+    const { devices } = qs.parse(location.search, { ignoreQueryPrefix: true }) as { [key: string]: string };
 
-    const device_ids = settings.devices;
+    const device_ids: string[] = devices.split(',');
+    await Api.updateUrl({
+        path: device_ids.join(','),
+    });
     const device_definitions = await Api.loadDevicesDefinitions(device_ids);
+
+    const date_to = moment();
+    const date_from = date_to.clone().subtract(1, 'day');
 
     const results = await Promise.all(
         device_ids.map(device_id =>

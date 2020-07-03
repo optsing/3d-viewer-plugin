@@ -10,9 +10,7 @@ function findFileName (url: string) {
     return url;
 }
 
-const query = qs.parse(location.search, { ignoreQueryPrefix: true }) as { [key: string]: string };
-
-const src = query.src || '';
+const { src } = qs.parse(location.search, { ignoreQueryPrefix: true }) as { [key: string]: string };
 
 document.title = findFileName(src);
 

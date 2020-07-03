@@ -23,13 +23,13 @@ async function main () {
         if (!message_el || !table_el) {
             throw new Error('Elements not found');
         }
-        const query = qs.parse(location.search, { ignoreQueryPrefix: true }) as { [key: string]: string };
-        if (!query.src) {
+        const { src } = qs.parse(location.search, { ignoreQueryPrefix: true }) as { [key: string]: string };
+        if (!src) {
             throw new Error('No src provided');
         }
-        document.title = findFileName(query.src);
+        document.title = findFileName(src);
 
-        const response = await fetch(query.src);
+        const response = await fetch(src);
         if (!response.ok) {
             throw new Error(response.statusText);
         }
