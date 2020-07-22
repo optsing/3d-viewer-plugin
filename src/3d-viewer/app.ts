@@ -1,3 +1,4 @@
+import 'normalize.css';
 import './app.css';
 
 import qs from 'qs';

@@ -1,3 +1,4 @@
+import 'normalize.css';
 import './app.css';
 
 import CsvParse from 'csv-parse';

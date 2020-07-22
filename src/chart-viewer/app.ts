@@ -1,15 +1,17 @@
+import 'normalize.css';
 import './app.css';
 
 import moment from 'moment';
 import qs from 'qs';
 
-import Plotly from 'plotly.js/lib/core';
-import ru_locale from 'plotly.js/lib/locales/ru';
-
 import * as Api from 'scada-plugin-api';
 
-Plotly.register(ru_locale);
+import Plotly from 'plotly.js/lib/core';
 
+// @ts-ignore
+import ru_locale from 'plotly.js/lib/locales/ru';
+// @ts-ignore
+Plotly.register(ru_locale);
 
 async function main () {
     const { devices, period = '1440', step = '120' } = qs.parse(location.search, { ignoreQueryPrefix: true }) as { [key: string]: string };
