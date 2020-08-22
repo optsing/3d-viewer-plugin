@@ -1,7 +1,7 @@
 import 'normalize.css';
 import './app.css';
 
-import moment from 'moment';
+import { format, subMinutes } from 'date-fns';
 import qs from 'qs';
 
 import * as Api from 'scada-plugin-api';
@@ -22,8 +22,8 @@ async function main () {
     });
     const device_definitions = await Api.loadDevicesDefinitions(device_ids);
 
-    const date_to = moment();
-    const date_from = date_to.clone().subtract(Number.parseInt(period), 'minutes');
+    const date_to = new Date();
+    const date_from = subMinutes(date_to, Number.parseInt(period));
 
     const step_number = Number.parseInt(step);
 
@@ -32,8 +32,8 @@ async function main () {
             Api.loadDeviceArchiveData(
                 device_id,
                 ['temp'],
-                date_from.format('YYYY-MM-DD HH:mm:ss'),
-                date_to.format('YYYY-MM-DD HH:mm:ss'),
+                format(date_from, 'yyyy-MM-dd HH:mm:ss'),
+                format(date_to, 'yyyy-MM-dd HH:mm:ss'),
                 {
                     step: step_number,
                 },
