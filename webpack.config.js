@@ -6,5 +6,5 @@ module.exports = merge(
     require('./src/3d-viewer/webpack.config.js'),
     require('./src/csv-viewer/webpack.config.js'),
     require('./src/chart-viewer/webpack.config.js'),
-    // require('./src/text-editor/webpack.config.js'),
+    require('./src/chart-viewer2/webpack.config.js'),
 );

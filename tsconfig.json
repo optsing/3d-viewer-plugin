@@ -10,7 +10,7 @@
     "outDir": "./dist",
     "declaration": true,
     "emitDeclarationOnly": true,
-    "moduleResolution": "node",
+    "moduleResolution": "node"
   },
   "include": [
     "src/**/*.ts",
