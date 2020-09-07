@@ -143,6 +143,7 @@ async function main () {
                     }
                 },
             },
+            maintainAspectRatio: false,
         }
     });
 
