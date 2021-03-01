@@ -1,15 +1,17 @@
 {
     "presets": [
-        "@babel/preset-typescript",
         [
-            "@babel/preset-env",
+            "@babel/env",
             {
                 "modules": false,
                 "useBuiltIns": "usage",
                 "corejs": 3,
                 "loose": true,
-                "debug": true
+                "debug": true,
+                "bugfixes": true,
+                "shippedProposals": true
             }
-        ]
+        ],
+        "@babel/typescript"
     ]
 }
